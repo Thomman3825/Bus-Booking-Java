@@ -1,4 +1,6 @@
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -7,7 +9,10 @@ import java.util.Scanner;
 
 
 interface Buses {
+    Map <String,Integer> buses = new HashMap<>();
+    static  Map <String, Integer> busSelected =new HashMap<>();
     public void showBuses();
+    public void getBus();
 }
 interface TravelDetails{
     public void getSource();
@@ -17,19 +22,20 @@ interface TravelDetails{
 }
 
 abstract class User implements Buses,TravelDetails{
-    String name,source,destination,busSelected;
+    String name,source,destination,busChoice,selectedBus;
     int age,busTag;
     Date date;
 
     abstract public void getUser();
-    abstract public void getBus();
+    
 
    
 }
 
 class Traveller extends User implements TravelDetails,Buses{
-    String[] busName = {"B1", "B2", "B3"};
-    int [] price = {2000, 4000, 5000};
+    // String[] busName = {"B1", "B2", "B3"};
+    // int [] price = {2000, 4000, 5000};
+     
 
 @Override
 public void getUser() {
@@ -75,8 +81,16 @@ public void getUser() {
     public void showBuses() {
         System.out.println("-----------------------");
         System.out.println("Buses available:");
-        for (int i = 0; i <3; i++){
-            System.out.println((i+1) + "."+ busName[i] + ": Rs." + price[i]);
+        // for (int i = 0; i <3; i++){
+        //     System.out.println((i+1) + "."+ busName[i] + ": Rs." + price[i]);
+        // }
+        buses.put("B1", 1000);
+        buses.put("B2", 2000);
+        buses.put("B3", 3000);
+        int i = 1;
+        for (String bus: buses.keySet()){
+            System.out.println((i) + bus + "- Rs." + buses.get(bus));
+            i++;
         }
     }
 
@@ -84,26 +98,32 @@ public void getUser() {
     public void getBus() {
         Scanner sc = new Scanner(System.in);
         System.out.println("-----------------------");
-        System.out.println("Enter Bus Choice");
-        busTag = sc.nextInt();
+        System.out.println("Enter Bus Name");
+        busChoice = sc.nextLine();
 
-        switch(busTag){
-            case 1:
-            busSelected = busName[0];
-            break;
+        // switch(busChoice){
+        //     case "B1":
+        //     busSelected = buses.
+        //     break;
 
-            case 2:
-            busSelected = busName[1];
-            break;
+        //     case "B2":
+        //     busSelected = busName[1];
+        //     break;
 
-            case 3:
-            busSelected = busName[2];
-            break;
+        //     case "B3":
+        //     busSelected = busName[2];
+        //     break;
             
-            default:
-            System.out.println("Not correct Choice.");
-            break;
-        }
+        //     default:
+        //     System.out.println("Not correct Choice.");
+        //     break;
+        // }
+        // for (String bus : buses.keySet()){
+        //     if (bus == busChoice){
+        //         busSelected.put(bus, buses.get(bus));
+        //     }
+        // }
+        selectedBus = busChoice;
         
     }
 
@@ -112,7 +132,7 @@ public void getUser() {
         System.out.println("Booking Successful");
         System.out.println("Source:" + source + " " + "Destination:" + destination);
         System.out.println("Date:" + date);
-        System.out.println("Bus Selected:" + busSelected);
+        System.out.println("Bus Selected:" + selectedBus);
         System.out.println("Name:" + name +  " " + "Age:" + age);
 
     }
