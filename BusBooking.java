@@ -1,7 +1,11 @@
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Stream;
+import java.util.List;
+import java.util.stream.*;
 
 /**
  * BusBooking
@@ -9,8 +13,11 @@ import java.util.Scanner;
 
 
 interface Buses {
+    List<Integer> busPrice = new ArrayList<>();
+    List<String> busName = new ArrayList<>();
+    
     Map <String,Integer> buses = new HashMap<>();
-    static  Map <String, Integer> busSelected =new HashMap<>();
+    //static  Map <String, Integer> busSelected =new HashMap<>();
     public void showBuses();
     public void getBus();
 }
@@ -22,8 +29,8 @@ interface TravelDetails{
 }
 
 abstract class User implements Buses,TravelDetails{
-    String name,source,destination,busChoice,selectedBus;
-    int age,busTag;
+    String name,source,destination,selectedBus;
+    int age,busTag,busChoice;
     Date date;
 
     abstract public void getUser();
@@ -79,51 +86,65 @@ public void getUser() {
 
      @Override
     public void showBuses() {
+        Stream<Integer> busP = busPrice.stream();
+        Stream<String> busN = busName.stream();
         System.out.println("-----------------------");
         System.out.println("Buses available:");
         // for (int i = 0; i <3; i++){
         //     System.out.println((i+1) + "."+ busName[i] + ": Rs." + price[i]);
         // }
-        buses.put("B1", 1000);
-        buses.put("B2", 2000);
-        buses.put("B3", 3000);
-        int i = 1;
-        for (String bus: buses.keySet()){
-            System.out.println((i) + bus + "- Rs." + buses.get(bus));
-            i++;
-        }
+        // buses.put("B1", 1000);
+        // buses.put("B2", 2000);
+        // buses.put("B3", 3000);
+
+        busName.add("B1");
+        busName.add("B2");
+        busName.add("B3");
+        busPrice.add(3000);
+        busPrice.add(2000);
+        busPrice.add(5000);
+        // int i = 1;
+        // for (String bus: buses.keySet()){
+        //     System.out.println((i) + bus + "- Rs." + buses.get(bus));
+        //     i++;
+        // }
+
+            busN.forEach((b)->System.out.print(b + " "));
+            System.out.println(" ");
+            busP.forEach((bP)->System.out.print(bP + " "));
     }
 
     @Override
     public void getBus() {
         Scanner sc = new Scanner(System.in);
+        System.out.println(" ");
         System.out.println("-----------------------");
-        System.out.println("Enter Bus Name");
-        busChoice = sc.nextLine();
+        System.out.println("Enter Bus Choice");
+        busChoice = sc.nextInt();
 
-        // switch(busChoice){
-        //     case "B1":
-        //     busSelected = buses.
-        //     break;
+        switch(busChoice){
+            case 1:
+            selectedBus = busName.get(0);
+            break;
 
-        //     case "B2":
-        //     busSelected = busName[1];
-        //     break;
+            case 2:
+            selectedBus = busName.get(1);
+            break;
 
-        //     case "B3":
-        //     busSelected = busName[2];
-        //     break;
+            case 3:
+            selectedBus = busName.get(2);
+            break;
             
-        //     default:
-        //     System.out.println("Not correct Choice.");
-        //     break;
-        // }
+            default:
+            System.out.println("Not correct Choice.");
+            break;
+        }
         // for (String bus : buses.keySet()){
         //     if (bus == busChoice){
         //         busSelected.put(bus, buses.get(bus));
         //     }
         // }
-        selectedBus = busChoice;
+        // selectedBus = busChoice;
         
     }
 
